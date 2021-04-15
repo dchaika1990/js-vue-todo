@@ -11,9 +11,14 @@ const routes = [
     component: Home
   },
   {
-    path: '/task',
+    path: '/task/:id',
     name: 'Task',
     component: () => import(/* webpackChunkName: "about" */ '../views/Task')
+  },
+  {
+    path: '/tasks',
+    name: 'Tasks',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Tasks')
   }
 ]
 

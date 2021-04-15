@@ -1,16 +1,19 @@
 <template>
-  <div id="app">
-	<Navigation />
-    <router-view/>
-  </div>
+	<div id="app">
+		<Navbar/>
+		<div class="divider-100"></div>
+		<div class="grid-container">
+			<router-view/>
+		</div>
+	</div>
 </template>
 
 <script>
-import Navigation from "@/components/Navigation";
+import Navbar from "@/components/Navbar";
 
 export default {
 	components: {
-		Navigation
+		Navbar
 	}
 }
 </script>
