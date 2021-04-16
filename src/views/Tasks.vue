@@ -3,32 +3,39 @@
 		<h2>Tasks List</h2>
 		<hr>
 		<div class="divider-30"></div>
-		<div v-if="tasks.length" class="grid-cols-lg-4 grid-cols-md-2 gap-30">
-			<div
+		<div class="grid-cols-lg-4 grid-cols-md-2 gap-30">
+			<a
+				@click="newTask"
+				class="task"
+			>+</a>
+			<TaskItem
+				v-if="tasks.length"
 				v-for="(task, idx) of tasks"
 				:key="task.id"
-				class="task"
-			>
-				<h4>{{task.title}}</h4>
-				<router-link
-					tag="button"
-					class="btn btn-maincolor"
-					:to="'/task/' + task.id"
-				>
-					Read more
-				</router-link>
-			</div>
+				v-bind:task="task"
+			/>
+			<p v-else>No Tasks</p>
 		</div>
-		<p v-else>No Tasks</p>
 	</div>
 </template>
 
 <script>
+import TaskItem from "../components/TaskItem";
+
 export default {
 	name: "Tasks",
 	computed: {
-		tasks(){
+		tasks() {
 			return this.$store.getters.tasks
+		}
+	},
+	components: {
+		TaskItem
+	},
+	methods: {
+		newTask(){
+			const link = '/task/' + Date.now();
+			this.$router.push(link);
 		}
 	}
 }
