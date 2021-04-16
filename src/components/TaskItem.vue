@@ -1,7 +1,10 @@
 <template>
 	<div class="task">
 		<h4>{{ task.title }}</h4>
-		<div class="grid-cols-2 gap-10">
+		<TodoList
+			v-bind:todos="task.todos"
+		/>
+		<div class="grid-cols-2 gap-10 mt-20">
 			<router-link
 				tag="button"
 				class="btn btn-maincolor"
@@ -12,20 +15,36 @@
 			<button
 				@click="deleteTask"
 				class="btn btn-maincolor2"
-			>Delete</button>
+			>Delete
+			</button>
 		</div>
 	</div>
 </template>
 
 <script>
+import TodoList from "./TodoList";
+
 export default {
 	name: "TaskItem",
+	data(){
+		return {
+			editFlag: false
+		}
+	},
 	props: {
 		task: {}
 	},
 	methods: {
-		deleteTask(){
+		deleteTask() {
 			this.$store.dispatch('deleteTask', this.task.id);
+		}
+	},
+	components: {
+		TodoList
+	},
+	computed: {
+		todosRange(){
+			// return this.task.todos.splice(0, 3)
 		}
 	}
 }

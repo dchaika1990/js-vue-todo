@@ -1,0 +1,16 @@
+.todos{
+   list-style: none;
+   &-item{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      &:not(:last-child){
+         margin-bottom: 10px;
+      }
+      &.edit{
+         padding: 15px 20px;
+         border: 1px solid $borderColor;
+         border-radius: 5px;
+      }
+   }
+}

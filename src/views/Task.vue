@@ -15,13 +15,23 @@
 		<div v-else>
 			<h2>{{ task === undefined ? newTask.title : task.title }}</h2>
 			<hr>
-			<div class="divider-30"></div>
 		</div>
+		<div class="divider-30"></div>
+		<AddTodo
+			v-if="editFlag"
+			@newTodo="newTodo"
+		/>
+		<TodoList
+			v-bind:todos="task.todos"
+			v-bind:editFlag="editFlag"
+		/>
 	</div>
 </template>
 
 <script>
 import AddTask from "../components/AddTask.vue";
+import TodoList from "../components/TodoList";
+import AddTodo from "../components/AddTodo";
 
 export default {
 	name: "Task",
@@ -47,10 +57,13 @@ export default {
 		},
 		flagFalse(flag){
 			this.editFlag = flag
+		},
+		newTodo(item){
+			this.task.todos.push(item);
 		}
 	},
 	components: {
-		AddTask
+		AddTask, TodoList, AddTodo
 	}
 }
 </script>

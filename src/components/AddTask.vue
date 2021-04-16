@@ -22,7 +22,8 @@ export default {
 			if (this.task !== undefined) {
 				this.$store.dispatch('updateTask', {
 					id: this.newTask.id,
-					title: this.newTask.title
+					title: this.newTask.title,
+					todos: this.task.todos
 				})
 			} else {
 				this.$store.dispatch('createTask', this.newTask)
@@ -31,7 +32,7 @@ export default {
 			this.editFlag = false;
 			this.$emit('flagFalse', this.editFlag)
 		},
-	}
+	},
 }
 </script>
 
