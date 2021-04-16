@@ -24,7 +24,7 @@
 			v-if="this.task !== undefined && !this.editFlag"
 			@click="editTask"
 			class="btn btn-maincolor"
-		>Edit</button>
+		>Edit Task</button>
 	</div>
 </template>
 
@@ -55,7 +55,7 @@ export default {
 				})
 			} else {
 				this.$store.dispatch('createTask', this.newTask)
-				this.$router.push('/tasks')
+				this.$router.push('/')
 			}
 			this.editFlag = false;
 		},

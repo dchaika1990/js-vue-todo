@@ -22,3 +22,10 @@ button{
       background-color: $colorMain2;
    }
 }
+.btn-maincolor2{
+   background-color: $colorMain2;
+   color: $lightColor;
+   &:hover{
+      background-color: $colorMain;
+   }
+}

@@ -3,11 +3,13 @@
 		<h2>Tasks List</h2>
 		<hr>
 		<div class="divider-30"></div>
-		<div class="grid-cols-lg-4 grid-cols-md-2 gap-30">
-			<a
+		<div class="grid-cols-lg-3 grid-cols-md-2 gap-30">
+			<div
 				@click="newTask"
-				class="task"
-			>+</a>
+				class="task task-add"
+			>
+				+
+			</div>
 			<TaskItem
 				v-if="tasks.length"
 				v-for="(task, idx) of tasks"
