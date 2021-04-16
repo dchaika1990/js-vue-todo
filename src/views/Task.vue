@@ -22,6 +22,7 @@
 			@newTodo="newTodo"
 		/>
 		<TodoList
+			v-if="this.task !== undefined"
 			v-bind:todos="task.todos"
 			v-bind:editFlag="editFlag"
 		/>
