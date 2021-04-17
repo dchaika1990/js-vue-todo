@@ -1,7 +1,6 @@
 <template>
-	<div id="app">
+	<div id="app" class="s-py-100">
 		<Navbar/>
-		<div class="divider-100"></div>
 		<div class="grid-container">
 			<router-view/>
 		</div>

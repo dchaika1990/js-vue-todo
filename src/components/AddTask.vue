@@ -1,10 +1,19 @@
 <template>
 	<form @submit.prevent="onSubmit">
-		<button
-			class="btn btn-maincolor mb-20"
-			type="submit"
-		>Save Task
-		</button>
+		<div>
+			<button
+				class="btn btn-maincolor mb-20 mr-20"
+				type="submit"
+			>Save Task
+			</button>
+			<button
+				class="btn btn-maincolor2 mb-20"
+				type="button"
+				@click="cancelEdit"
+			>Cancel Edit Task
+			</button>
+		</div>
+
 		<input
 			v-model:title="newTask.title"
 			placeholder="Title of Task"
@@ -18,6 +27,11 @@
 export default {
 	name: "AddTask",
 	props: ['newTask', 'task'],
+	data(){
+		return {
+			editFlag: false
+		}
+	},
 	methods: {
 		onSubmit() {
 			if (this.task !== undefined) {
@@ -30,9 +44,12 @@ export default {
 				this.$store.dispatch('createTask', this.newTask)
 				this.$router.push('/')
 			}
-			this.editFlag = false;
 			this.$emit('flagFalse', this.editFlag)
 		},
+		cancelEdit(){
+			this.$store.dispatch('cancelEditTask')
+			this.$emit('flagFalse', this.editFlag)
+		}
 	},
 }
 </script>

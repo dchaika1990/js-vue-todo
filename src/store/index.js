@@ -23,6 +23,9 @@ export default new Vuex.Store({
 		deleteTask(state, id){
 			state.tasks = state.tasks.filter(t => t.id !== id);
 			localStorage.setItem('tasks', JSON.stringify(state.tasks))
+		},
+		cancelEditTask(state){
+			state.tasks = JSON.parse(localStorage.getItem('tasks'))
 		}
 	},
 	actions: {
@@ -34,6 +37,9 @@ export default new Vuex.Store({
 		},
 		deleteTask({commit}, id) {
 			commit('deleteTask', id)
+		},
+		cancelEditTask({commit}) {
+			commit('cancelEditTask')
 		}
 	},
 	getters: {

@@ -12,6 +12,7 @@
 			v-bind:newTask="newTask"
 			v-bind:task="task"
 			@flagFalse="flagFalse"
+			@cancelEdit="flagFalse"
 		/>
 		<div v-else>
 			<h2>{{ task === undefined ? newTask.title : task.title }}</h2>
