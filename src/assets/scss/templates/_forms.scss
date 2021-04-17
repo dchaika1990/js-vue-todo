@@ -8,15 +8,16 @@ input[type="tel"],
 input[type="number"],
 textarea,
 select{
-   height: 40px;
-   border: 1px solid $borderColor;
+   border: none;
+   border-bottom: 1px solid $borderColor;
    background-color: transparent;
    border-radius: 0;
-   color: $colorDark;
-   padding: 9px 20px;
+   color: $fontHeaders;
    font-size: 16px;
    width: 100%;
+   min-height: 29px;
 }
+
 
 input[disabled] {
    opacity: .4;

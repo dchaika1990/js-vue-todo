@@ -5,6 +5,7 @@
 			type="checkbox"
 			v-bind:checked="todo.completed"
 			@change="todo.completed = !todo.completed"
+			class="mr-10"
 		>
 		<input
 			v-if="editFlag"
@@ -20,7 +21,7 @@
 		<span v-if="editFlag">
 			<button
 				@click="$emit('removeTodo', todo.id)"
-				class="btn btn-maincolor2"
+				class="btn btn-maincolor2 ml-10"
 			>Remove</button>
 		</span>
 	</li>

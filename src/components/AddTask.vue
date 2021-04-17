@@ -8,6 +8,7 @@
 		<input
 			v-model:title="newTask.title"
 			placeholder="Title of Task"
+			class="task-form"
 			type="text"
 			required>
 	</form>
