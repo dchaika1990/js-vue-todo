@@ -37,7 +37,8 @@ export default {
 	},
 	methods: {
 		deleteTask() {
-			this.$store.dispatch('deleteTask', this.task.id);
+			this.$emit('deleteTask', this.task.id)
+			// this.$store.dispatch('deleteTask', this.task.id);
 		}
 	},
 	components: {
