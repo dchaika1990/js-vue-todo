@@ -1,12 +1,5 @@
 <template>
 	<div>
-		<Modal
-			v-if="modalShow"
-			v-bind:title="modalTitle"
-			v-bind:modalShow="modalShow"
-			v-bind:modalHandler="modalHandler"
-			@closeModal="closeModal"
-		/>
 		<h2>Tasks List</h2>
 		<hr>
 		<div class="divider-30"></div>
@@ -26,6 +19,13 @@
 			/>
 			<p v-else>No Tasks</p>
 		</div>
+		<Modal
+			v-if="modalShow"
+			v-bind:title="modalTitle"
+			v-bind:modalShow="modalShow"
+			v-bind:modalHandler="modalHandler"
+			@closeModal="closeModal"
+		/>
 	</div>
 </template>
 
