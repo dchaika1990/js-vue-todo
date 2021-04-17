@@ -1,5 +1,12 @@
 <template>
 	<div>
+		<Modal
+			v-if="modalShow"
+			v-bind:title="modalTitle"
+			v-bind:modalShow="modalShow"
+			v-bind:modalHandler="modalHandler"
+			@closeModal="closeModal"
+		/>
 		<button
 			v-if="!editFlag && !newTask"
 			@click="editTask"
@@ -12,7 +19,7 @@
 			v-bind:task="task"
 			v-bind:newTask="newTask"
 			@flagFalse="flagFalse"
-			@cancelEdit="flagFalse"
+			@cancelEdit="cancelEditTask"
 		/>
 		<div v-else>
 			<h2>{{ task.title }}</h2>
@@ -33,9 +40,10 @@
 </template>
 
 <script>
-import AddTask from "../components/AddTask.vue";
-import TodoList from "../components/TodoList";
-import AddTodo from "../components/AddTodo";
+import AddTask from "@/components/AddTask.vue";
+import TodoList from "@/components/TodoList";
+import AddTodo from "@/components/AddTodo";
+import Modal from "@/components/Modal";
 
 export default {
 	name: "Task",
@@ -46,7 +54,10 @@ export default {
 				title: 'New Task',
 				id: +this.$route.params.id,
 				todos: []
-			}
+			},
+			modalTitle: '',
+			modalShow: false,
+			modalHandler: () => {}
 		}
 	},
 	computed: {
@@ -74,10 +85,24 @@ export default {
 		},
 		removeTodo(id){
 			this.task.todos = this.task.todos.filter(t => t.id !== id)
-		}
+		},
+		cancelEditTask(){
+			this.showModal('Cancel edit task?');
+			this.modalHandler = function () {
+				this.$store.dispatch('cancelEditTask');
+			}
+		},
+		showModal(title){
+			this.modalShow = true;
+			this.modalTitle = title;
+		},
+		closeModal(){
+			this.modalShow = false;
+			this.modalTitle = ''
+		},
 	},
 	components: {
-		AddTask, TodoList, AddTodo
+		AddTask, TodoList, AddTodo, Modal
 	}
 }
 </script>

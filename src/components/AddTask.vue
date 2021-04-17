@@ -47,8 +47,9 @@ export default {
 			this.$emit('flagFalse', this.editFlag)
 		},
 		cancelEdit(){
-			this.$store.dispatch('cancelEditTask')
-			this.$emit('flagFalse', this.editFlag)
+			// this.$store.dispatch('cancelEditTask')
+			// this.$emit('flagFalse', this.editFlag)
+			this.$emit('cancelEdit')
 		}
 	},
 }
