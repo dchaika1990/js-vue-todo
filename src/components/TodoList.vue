@@ -4,6 +4,7 @@
 			v-for="todo in todos"
 			v-bind:todo="todo"
 			v-bind:editFlag="editFlag"
+			@removeTodo="removeTodo"
 			:key="todo.id"
 		/>
 	</ul>
@@ -17,6 +18,11 @@ export default {
 	props: ['todos', 'editFlag'],
 	components: {
 		TodoItem
+	},
+	methods: {
+		removeTodo(id) {
+			this.$emit('removeTodo', id)
+		}
 	}
 }
 </script>

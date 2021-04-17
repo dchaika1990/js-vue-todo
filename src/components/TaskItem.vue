@@ -2,7 +2,7 @@
 	<div class="task">
 		<h4>{{ task.title }}</h4>
 		<TodoList
-			v-bind:todos="task.todos"
+			v-bind:todos="task.todos.slice(0, 3)"
 		/>
 		<div class="grid-cols-2 gap-10 mt-20">
 			<router-link
@@ -15,7 +15,8 @@
 			<button
 				@click="deleteTask"
 				class="btn btn-maincolor2"
-			>Delete
+			>
+				Delete
 			</button>
 		</div>
 	</div>
@@ -41,11 +42,6 @@ export default {
 	},
 	components: {
 		TodoList
-	},
-	computed: {
-		todosRange(){
-			// return this.task.todos.splice(0, 3)
-		}
 	}
 }
 </script>

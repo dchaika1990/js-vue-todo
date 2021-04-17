@@ -4,7 +4,8 @@
 			v-if="this.task !== undefined && !this.editFlag"
 			@click="editTask"
 			class="btn btn-maincolor mb-20"
-		>Edit Task
+		>
+			Edit Task
 		</button>
 		<AddTask
 			v-if="this.task === undefined || this.editFlag"
@@ -25,6 +26,7 @@
 			v-if="this.task !== undefined"
 			v-bind:todos="task.todos"
 			v-bind:editFlag="editFlag"
+			@removeTodo="removeTodo"
 		/>
 	</div>
 </template>
@@ -61,6 +63,9 @@ export default {
 		},
 		newTodo(item){
 			this.task.todos.push(item);
+		},
+		removeTodo(id){
+			this.task.todos = this.task.todos.filter(t => t.id !== id)
 		}
 	},
 	components: {

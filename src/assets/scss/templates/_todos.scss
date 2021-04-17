@@ -8,9 +8,10 @@
          margin-bottom: 10px;
       }
       &.edit{
-         padding: 15px 20px;
-         border: 1px solid $borderColor;
-         border-radius: 5px;
+
+      }
+      .completed{
+         text-decoration: line-through;
       }
    }
 }
