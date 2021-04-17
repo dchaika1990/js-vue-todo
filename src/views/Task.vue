@@ -1,32 +1,32 @@
 <template>
 	<div>
 		<button
-			v-if="this.task !== undefined && !this.editFlag"
+			v-if="!editFlag && !newTask"
 			@click="editTask"
 			class="btn btn-maincolor mb-20"
 		>
 			Edit Task
 		</button>
 		<AddTask
-			v-if="this.task === undefined || this.editFlag"
-			v-bind:newTask="newTask"
+			v-if="newTask || editFlag"
 			v-bind:task="task"
+			v-bind:newTask="newTask"
 			@flagFalse="flagFalse"
 			@cancelEdit="flagFalse"
 		/>
 		<div v-else>
-			<h2>{{ task === undefined ? newTask.title : task.title }}</h2>
+			<h2>{{ task.title }}</h2>
 			<hr>
 		</div>
 		<div class="divider-30"></div>
 		<AddTodo
-			v-if="editFlag"
+			v-if="newTask || editFlag"
 			@newTodo="newTodo"
 		/>
 		<TodoList
-			v-if="this.task !== undefined"
 			v-bind:todos="task.todos"
 			v-bind:editFlag="editFlag"
+			v-bind:newTask="newTask"
 			@removeTodo="removeTodo"
 		/>
 	</div>
@@ -42,22 +42,29 @@ export default {
 	data() {
 		return {
 			editFlag: false,
-			newTask: {
+			newT: {
 				title: 'New Task',
 				id: +this.$route.params.id,
 				todos: []
-			},
+			}
 		}
 	},
 	computed: {
 		task() {
-			return this.$store.getters.taskById(+this.$route.params.id);
+			let task = this.$store.getters.taskById(+this.$route.params.id);
+			if ( task === undefined ) {
+				task = this.newT
+			}
+			return task
+		},
+		newTask(){
+			let t = this.$store.getters.taskById(+this.$route.params.id);
+			return t === undefined
 		}
 	},
 	methods: {
 		editTask() {
 			this.editFlag = true;
-			this.newTask.title = this.task.title;
 		},
 		flagFalse(flag){
 			this.editFlag = flag

@@ -4,6 +4,7 @@
 			v-for="todo in todos"
 			v-bind:todo="todo"
 			v-bind:editFlag="editFlag"
+			v-bind:newTask="newTask"
 			@removeTodo="removeTodo"
 			:key="todo.id"
 		/>
@@ -15,7 +16,7 @@ import TodoItem from "./TodoItem";
 
 export default {
 	name: "TodoList",
-	props: ['todos', 'editFlag'],
+	props: ['todos', 'editFlag', 'newTask'],
 	components: {
 		TodoItem
 	},
