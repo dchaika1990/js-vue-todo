@@ -26,6 +26,22 @@
 			<hr>
 		</div>
 		<div class="divider-30"></div>
+		<div v-if="newTask || editFlag">
+			<div class="d-flex">
+				<button
+					class="btn btn-maincolor"
+					@click="undo"
+					:disabled="!(this.historyIndex > 0)"
+				><</button>
+				<button
+					class="btn btn-maincolor ml-20"
+					@click="redo"
+					:disabled="!(this.historyIndex < (this.taskHistory.length - 1))"
+				>></button>
+			</div>
+			{{historyIndex}}
+			<div class="divider-30"></div>
+		</div>
 		<AddTodo
 			v-if="newTask || editFlag"
 			@newTodo="newTodo"
@@ -63,20 +79,45 @@ export default {
 			},
 			modalTitle: '',
 			modalShow: false,
-			modalHandler: () => {}
+			modalHandler: () => {},
+			historyTask: {},
+			taskHistory: [],
+			historyIndex: -1,
+			watching: true,
 		}
 	},
 	computed: {
-		task() {
-			let task = this.$store.getters.taskById(+this.$route.params.id);
-			if ( task === undefined ) {
-				task = this.newT
+		task: {
+			get: function () {
+				let task = this.$store.getters.taskById(+this.$route.params.id);
+				if ( task === undefined ) {
+					task = this.newT
+				}
+				if (Object.keys(this.historyTask).length){
+					task = this.taskHistory[this.historyIndex]
+				}
+				return task
+			},
+			set: function (val){
+				this.historyTask = val
 			}
-			return task
 		},
 		newTask(){
 			let t = this.$store.getters.taskById(+this.$route.params.id);
 			return t === undefined
+		}
+	},
+	watch: {
+		task: {
+			handler: function(val) {
+				if (this.watching) {
+					this.taskHistory.push(JSON.parse(JSON.stringify(val)));
+					this.historyIndex = this.taskHistory.length - 1;
+				} else {
+					this.watching = true;
+				}
+			},
+			deep: true,
 		}
 	},
 	methods: {
@@ -112,6 +153,22 @@ export default {
 		closeModal(){
 			this.modalShow = false;
 			this.modalTitle = ''
+		},
+		undo(){
+			this.watching = false;
+			console.log('undo')
+			if (this.historyIndex > 0) {
+				this.historyIndex -= 1;
+				this.task = this.taskHistory[this.historyIndex];
+			}
+		},
+		redo(){
+			this.watching = false;
+			console.log('redo')
+			if (this.historyIndex < (this.taskHistory.length - 1)) {
+				this.historyIndex += 1;
+				this.task = this.taskHistory[this.historyIndex];
+			}
 		},
 	},
 	components: {

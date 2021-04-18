@@ -4,6 +4,9 @@
 
 button{
    border: unset;
+   &[disabled='disabled']{
+      opacity: .5;
+   }
 }
 
 .btn{
@@ -19,14 +22,14 @@ button{
 .btn-maincolor{
    background-color: $colorMain;
    color: $lightColor;
-   &:hover{
+   &:hover:not([disabled='disabled']){
       background-color: $colorMain2;
    }
 }
 .btn-maincolor2{
    background-color: $colorMain2;
    color: $lightColor;
-   &:hover{
+   &:hover:not([disabled='disabled']){
       background-color: $colorMain;
    }
 }
