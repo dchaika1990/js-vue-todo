@@ -5,7 +5,7 @@
 			type="text"
 			placeholder="New todo"
 		>
-		<button class="btn btn-maincolor2">Add Todo</button>
+		<button class="btn btn-maincolor">Add Todo</button>
 	</form>
 </template>
 

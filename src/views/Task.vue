@@ -37,6 +37,11 @@
 			v-bind:newTask="newTask"
 			@removeTodo="removeTodo"
 		/>
+		<div class="divider-40"></div>
+		<button
+			class="btn btn-maincolor2"
+			@click="deleteTask"
+		>Delete task</button>
 	</div>
 </template>
 
@@ -78,6 +83,19 @@ export default {
 		editTask() {
 			this.editFlag = true;
 		},
+		deleteTask() {
+			this.showModal('Delete task?');
+			this.modalHandler = () => {
+				this.$store.dispatch('deleteTask', this.task.id);
+				this.$router.push('/')
+			}
+		},
+		cancelEditTask(){
+			this.showModal('Cancel edit task?');
+			this.modalHandler = function () {
+				this.$store.dispatch('cancelEditTask');
+			}
+		},
 		flagFalse(flag){
 			this.editFlag = flag
 		},
@@ -86,12 +104,6 @@ export default {
 		},
 		removeTodo(id){
 			this.task.todos = this.task.todos.filter(t => t.id !== id)
-		},
-		cancelEditTask(){
-			this.showModal('Cancel edit task?');
-			this.modalHandler = function () {
-				this.$store.dispatch('cancelEditTask');
-			}
 		},
 		showModal(title){
 			this.modalShow = true;
