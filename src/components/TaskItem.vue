@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import TodoList from "./TodoList";
+import TodoList from "@/components/TodoList";
 
 export default {
 	name: "TaskItem",
@@ -38,7 +38,6 @@ export default {
 	methods: {
 		deleteTask() {
 			this.$emit('deleteTask', this.task.id)
-			// this.$store.dispatch('deleteTask', this.task.id);
 		}
 	},
 	components: {

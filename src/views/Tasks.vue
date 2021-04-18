@@ -12,10 +12,10 @@
 			</div>
 			<TaskItem
 				v-if="tasks.length"
-				v-for="(task, idx) of tasks"
+				v-for="task of tasks"
 				:key="task.id"
 				v-bind:task="task"
-				@deleteTask="deleteTask"
+				@deleteTask="deleteT"
 			/>
 			<p v-else>No Tasks</p>
 		</div>
@@ -30,8 +30,8 @@
 </template>
 
 <script>
-import TaskItem from "../components/TaskItem";
-import Modal from "../components/Modal";
+import TaskItem from "@/components/TaskItem";
+import Modal from "@/components/Modal";
 
 export default {
 	name: "Tasks",
@@ -63,12 +63,12 @@ export default {
 			this.modalShow = false;
 			this.modalTitle = ''
 		},
-		deleteTask(id){
+		deleteT(id){
 			this.showModal('Delete task?');
 			this.modalHandler = function () {
 				this.$store.dispatch('deleteTask', id);
 			}
-		}
+		},
 	},
 }
 </script>
