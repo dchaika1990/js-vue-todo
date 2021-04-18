@@ -14,6 +14,9 @@
       letter-spacing: 1px;
       color: $colorMain;
       text-transform: uppercase;
+      &:hover{
+         color: $fontColor;
+      }
    }
    &.fix-header{
       position: fixed;

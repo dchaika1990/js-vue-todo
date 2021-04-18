@@ -1,5 +1,5 @@
 <template>
-	<div class="modal">
+	<div class="modal" data-overlay @click="closeOnOverlay">
 		<div class="modal-wrap">
 			<div class="modal-title">
 				<h3>{{title}}</h3>
@@ -26,6 +26,9 @@ export default {
 		modalHand(){
 			this.$emit('closeModal');
 			return this.modalHandler()
+		},
+		closeOnOverlay(e){
+			if (e.target.hasAttribute('data-overlay')) this.$emit('closeModal');
 		}
 	}
 }

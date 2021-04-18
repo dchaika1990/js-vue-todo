@@ -30,6 +30,7 @@
 			v-if="newTask || editFlag"
 			@newTodo="newTodo"
 		/>
+		<div class="divider-40"></div>
 		<TodoList
 			v-bind:todos="task.todos"
 			v-bind:editFlag="editFlag"

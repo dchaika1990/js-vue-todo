@@ -64,7 +64,7 @@ export default {
 			this.modalTitle = ''
 		},
 		deleteTask(id){
-			this.showModal('Cancel delete task?');
+			this.showModal('Delete task?');
 			this.modalHandler = function () {
 				this.$store.dispatch('deleteTask', id);
 			}
