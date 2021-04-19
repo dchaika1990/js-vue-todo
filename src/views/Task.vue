@@ -32,12 +32,14 @@
 					class="btn btn-maincolor"
 					@click="undo"
 					:disabled="!(this.historyIndex > 0)"
-				><</button>
+				><
+				</button>
 				<button
 					class="btn btn-maincolor ml-20"
 					@click="redo"
-					:disabled="!(this.historyIndex < (this.taskHistory.length - 1))"
-				>></button>
+					:disabled="!(this.historyIndex < (this.historyTasks.length - 1))"
+				>>
+				</button>
 			</div>
 			<div class="divider-30"></div>
 		</div>
@@ -56,7 +58,9 @@
 		<button
 			class="btn btn-maincolor2"
 			@click="deleteTask"
-		>Delete task</button>
+		>Delete task
+		</button>
+		{{historyTasks}}
 	</div>
 </template>
 
@@ -78,40 +82,32 @@ export default {
 			},
 			modalTitle: '',
 			modalShow: false,
-			modalHandler: () => {},
-			historyTask: {},
-			taskHistory: [],
-			historyIndex: -1,
-			watching: false,
+			modalHandler: () => {
+			},
+			historyTasks: [],
+			historyIndex: 0,
+			watching: true,
 		}
 	},
 	computed: {
-		task: {
-			get: function () {
-				let task = this.$store.getters.taskById(+this.$route.params.id);
-				if ( task === undefined ) {
-					task = this.newT
-				}
-				if (Object.keys(this.historyTask).length){
-					task = this.taskHistory[this.historyIndex]
-				}
-				return task
-			},
-			set: function (val){
-				this.historyTask = val
+		task(){
+			let task = this.$store.getters.taskById(+this.$route.params.id);
+			if (task === undefined) {
+				task = this.newT
 			}
+			return task
 		},
-		newTask(){
+		newTask() {
 			let t = this.$store.getters.taskById(+this.$route.params.id);
 			return t === undefined
 		}
 	},
 	watch: {
 		task: {
-			handler: function(val) {
+			handler: function (val) {
 				if (this.watching) {
-					this.taskHistory.push(JSON.parse(JSON.stringify(val)));
-					this.historyIndex = this.taskHistory.length - 1;
+					this.historyTasks.push(JSON.parse(JSON.stringify(val)));
+					this.historyIndex = this.historyTasks.length - 1;
 				} else {
 					this.watching = true;
 				}
@@ -130,47 +126,45 @@ export default {
 				this.$router.push('/')
 			}
 		},
-		cancelEditTask(){
+		cancelEditTask() {
 			this.showModal('Cancel edit task?');
 			this.modalHandler = () => {
-				this.clearWatching();
 				this.$store.dispatch('cancelEditTask');
 			}
 		},
-		flagFalse(flag){
+		flagFalse(flag) {
 			this.editFlag = flag
 		},
-		newTodo(item){
+		newTodo(item) {
 			this.task.todos.push(item);
 		},
-		removeTodo(id){
+		removeTodo(id) {
 			this.task.todos = this.task.todos.filter(t => t.id !== id)
 		},
-		showModal(title){
+		showModal(title) {
 			this.modalShow = true;
 			this.modalTitle = title;
 		},
-		closeModal(){
+		closeModal() {
 			this.modalShow = false;
 			this.modalTitle = ''
 		},
-		clearWatching(){
-			this.historyTask = [];
-			this.historyIndex = -1;
-			this.watching = false;
+		rewriteTask() {
+			this.task.title = this.historyTasks[this.historyIndex].title;
+			this.task.todos = this.historyTasks[this.historyIndex].todos;
 		},
-		undo(){
+		undo() {
 			this.watching = false;
 			if (this.historyIndex > 0) {
 				this.historyIndex -= 1;
-				this.task = this.taskHistory[this.historyIndex];
+				this.rewriteTask();
 			}
 		},
-		redo(){
+		redo() {
 			this.watching = false;
-			if (this.historyIndex < (this.taskHistory.length - 1)) {
+			if (this.historyIndex < (this.historyTasks.length - 1)) {
 				this.historyIndex += 1;
-				this.task = this.taskHistory[this.historyIndex];
+				this.rewriteTask();
 			}
 		},
 	},

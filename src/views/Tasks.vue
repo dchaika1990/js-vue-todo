@@ -21,7 +21,8 @@
 		</div>
 		<div class="divider-30">
 			<hr>
-			<p>Made by Dmytro Chaika. <a href="https://github.com/dchaika1990/js-vue-todo/" target="_blank">My git</a></p>
+			<p>Made by Dmytro Chaika. <a href="https://github.com/dchaika1990/js-vue-todo/" target="_blank">My git</a>
+			</p>
 		</div>
 		<Modal
 			v-if="modalShow"
@@ -43,10 +44,14 @@ export default {
 		return {
 			modalTitle: '',
 			modalShow: false,
-			modalHandler: () => {}
+			modalHandler: () => {
+			}
 		}
 	},
 	computed: {
+		/**
+		 * get task from store
+		 */
 		tasks() {
 			return this.$store.getters.tasks
 		}
@@ -55,19 +60,32 @@ export default {
 		TaskItem, Modal
 	},
 	methods: {
-		newTask(){
+		/**
+		 * create link to new task
+		 * and link there
+		 */
+		newTask() {
 			const link = '/task/' + Date.now();
 			this.$router.push(link);
 		},
-		showModal(title){
+		/**
+		 * show modal with title
+		 */
+		showModal(title) {
 			this.modalShow = true;
 			this.modalTitle = title;
 		},
-		closeModal(){
+		/**
+		 * close modal and clean title
+		 */
+		closeModal() {
 			this.modalShow = false;
 			this.modalTitle = ''
 		},
-		deleteT(id){
+		/**
+		 * giving title and handler confirm to modal
+		 */
+		deleteT(id) {
 			this.showModal('Delete task?');
 			this.modalHandler = function () {
 				this.$store.dispatch('deleteTask', id);
