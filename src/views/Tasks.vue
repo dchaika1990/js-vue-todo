@@ -21,7 +21,7 @@
 		</div>
 		<div class="divider-30">
 			<hr>
-			<p>Made by Dmytro Chaika. <a href="https://github.com/dchaika1990/js-vue-todo/" target="_blank">My git</a>
+			<p>Made by Dmitriy Chaika. <a href="https://github.com/dchaika1990/js-vue-todo/" target="_blank">My git</a>
 			</p>
 		</div>
 		<Modal
