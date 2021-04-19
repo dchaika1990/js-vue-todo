@@ -33,6 +33,9 @@ export default {
 		}
 	},
 	methods: {
+		/**
+		 * create new or update task
+		 */
 		onSubmit() {
 			if (!this.newTask) {
 				this.$store.dispatch('updateTask', {
@@ -46,6 +49,9 @@ export default {
 			}
 			this.$emit('flagFalse', this.editFlag)
 		},
+		/**
+		 * cancel edit task
+		 */
 		cancelEdit(){
 			this.$emit('cancelEdit')
 		}

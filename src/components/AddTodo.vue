@@ -18,6 +18,9 @@ export default {
 		}
 	},
 	methods: {
+		/**
+		 * create new todoItem and give it to parent component and clean the form
+		 */
 		addTodo(){
 			if (this.title.trim()){
 				let todoItem = {

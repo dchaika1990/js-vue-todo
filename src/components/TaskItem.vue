@@ -36,6 +36,9 @@ export default {
 		task: {}
 	},
 	methods: {
+		/**
+		 * give task id to parent component
+		 */
 		deleteTask() {
 			this.$emit('deleteTask', this.task.id)
 		}

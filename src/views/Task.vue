@@ -9,7 +9,7 @@
 		/>
 		<button
 			v-if="!editFlag && !newTask"
-			@click="editTask"
+			@click="changeFlag(true)"
 			class="btn btn-maincolor mb-20"
 		>
 			Edit Task
@@ -18,7 +18,7 @@
 			v-if="newTask || editFlag"
 			v-bind:task="task"
 			v-bind:newTask="newTask"
-			@flagFalse="flagFalse"
+			@flagFalse="changeFlag"
 			@cancelEdit="cancelEditTask"
 		/>
 		<div v-else>
@@ -60,7 +60,6 @@
 			@click="deleteTask"
 		>Delete task
 		</button>
-		{{historyTasks}}
 	</div>
 </template>
 
@@ -90,6 +89,9 @@ export default {
 		}
 	},
 	computed: {
+		/**
+		 * get task from store
+		 */
 		task(){
 			let task = this.$store.getters.taskById(+this.$route.params.id);
 			if (task === undefined) {
@@ -97,12 +99,18 @@ export default {
 			}
 			return task
 		},
+		/**
+		 * checking if the page is new
+		 */
 		newTask() {
 			let t = this.$store.getters.taskById(+this.$route.params.id);
 			return t === undefined
 		}
 	},
 	watch: {
+		/**
+		 * watching for changes with task
+		 */
 		task: {
 			handler: function (val) {
 				if (this.watching) {
@@ -116,9 +124,9 @@ export default {
 		}
 	},
 	methods: {
-		editTask() {
-			this.editFlag = this.watching = true;
-		},
+		/**
+		 * show modal and give it the function for deleting
+		 */
 		deleteTask() {
 			this.showModal('Delete task?');
 			this.modalHandler = () => {
@@ -126,33 +134,57 @@ export default {
 				this.$router.push('/')
 			}
 		},
+		/**
+		 * show modal and give it the function for cancel editing
+		 */
 		cancelEditTask() {
 			this.showModal('Cancel edit task?');
 			this.modalHandler = () => {
 				this.$store.dispatch('cancelEditTask');
 			}
 		},
-		flagFalse(flag) {
+		/**
+		 * changing flag for edit
+		 */
+		changeFlag(flag) {
 			this.editFlag = flag
 		},
+		/**
+		 * create new todoItem
+		 */
 		newTodo(item) {
 			this.task.todos.push(item);
 		},
+		/**
+		 * delete todoItem by id
+		 */
 		removeTodo(id) {
 			this.task.todos = this.task.todos.filter(t => t.id !== id)
 		},
+		/**
+		 * show modal with title
+		 */
 		showModal(title) {
 			this.modalShow = true;
 			this.modalTitle = title;
 		},
+		/**
+		 * close modal and clean title
+		 */
 		closeModal() {
 			this.modalShow = false;
 			this.modalTitle = ''
 		},
+		/**
+		 * rewrite task title and task todos
+		 */
 		rewriteTask() {
 			this.task.title = this.historyTasks[this.historyIndex].title;
 			this.task.todos = this.historyTasks[this.historyIndex].todos;
 		},
+		/**
+		 * button for return action
+		 */
 		undo() {
 			this.watching = false;
 			if (this.historyIndex > 0) {
@@ -160,6 +192,9 @@ export default {
 				this.rewriteTask();
 			}
 		},
+		/**
+		 * button for repeat action
+		 */
 		redo() {
 			this.watching = false;
 			if (this.historyIndex < (this.historyTasks.length - 1)) {

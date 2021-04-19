@@ -23,10 +23,16 @@ export default {
 	name: "Modal",
 	props: ['title', 'modalHandler'],
 	methods: {
+		/**
+		 * close modal and call callback
+		 */
 		modalHand(){
 			this.$emit('closeModal');
 			return this.modalHandler()
 		},
+		/**
+		 * close modal on click on overlay
+		 */
 		closeOnOverlay(e){
 			if (e.target.hasAttribute('data-overlay')) this.$emit('closeModal');
 		}
