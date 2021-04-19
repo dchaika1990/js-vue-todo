@@ -32,6 +32,7 @@ export default {
 	name: "TodoItem",
 	props: ['todo','editFlag', 'newTask'],
 	methods:{
+
 	}
 }
 </script>

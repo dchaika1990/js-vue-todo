@@ -39,19 +39,18 @@
 					:disabled="!(this.historyIndex < (this.taskHistory.length - 1))"
 				>></button>
 			</div>
-			{{historyIndex}}
 			<div class="divider-30"></div>
 		</div>
-		<AddTodo
-			v-if="newTask || editFlag"
-			@newTodo="newTodo"
-		/>
-		<div class="divider-40"></div>
 		<TodoList
 			v-bind:todos="task.todos"
 			v-bind:editFlag="editFlag"
 			v-bind:newTask="newTask"
 			@removeTodo="removeTodo"
+		/>
+		<div class="divider-40"></div>
+		<AddTodo
+			v-if="newTask || editFlag"
+			@newTodo="newTodo"
 		/>
 		<div class="divider-40"></div>
 		<button
@@ -83,7 +82,7 @@ export default {
 			historyTask: {},
 			taskHistory: [],
 			historyIndex: -1,
-			watching: true,
+			watching: false,
 		}
 	},
 	computed: {
@@ -122,7 +121,7 @@ export default {
 	},
 	methods: {
 		editTask() {
-			this.editFlag = true;
+			this.editFlag = this.watching = true;
 		},
 		deleteTask() {
 			this.showModal('Delete task?');
@@ -133,7 +132,8 @@ export default {
 		},
 		cancelEditTask(){
 			this.showModal('Cancel edit task?');
-			this.modalHandler = function () {
+			this.modalHandler = () => {
+				this.clearWatching();
 				this.$store.dispatch('cancelEditTask');
 			}
 		},
@@ -154,9 +154,13 @@ export default {
 			this.modalShow = false;
 			this.modalTitle = ''
 		},
+		clearWatching(){
+			this.historyTask = [];
+			this.historyIndex = -1;
+			this.watching = false;
+		},
 		undo(){
 			this.watching = false;
-			console.log('undo')
 			if (this.historyIndex > 0) {
 				this.historyIndex -= 1;
 				this.task = this.taskHistory[this.historyIndex];
@@ -164,7 +168,6 @@ export default {
 		},
 		redo(){
 			this.watching = false;
-			console.log('redo')
 			if (this.historyIndex < (this.taskHistory.length - 1)) {
 				this.historyIndex += 1;
 				this.task = this.taskHistory[this.historyIndex];
